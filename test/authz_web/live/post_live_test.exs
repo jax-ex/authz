@@ -8,8 +8,8 @@ defmodule AuthzWeb.PostLiveTest do
   @update_attrs %{body: "some updated body", title: "some updated title"}
   @invalid_attrs %{body: nil, title: nil}
 
-  defp create_post(_) do
-    post = post_fixture()
+  defp create_post(%{user: user}) do
+    post = post_fixture(creator_id: user.id)
     %{post: post}
   end
 

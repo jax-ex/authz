@@ -56,6 +56,7 @@ defmodule AuthzWeb.PostLive.FormComponent do
   defp save_post(socket, :edit, post_params) do
     case Blog.update_post(socket.assigns.post, post_params) do
       {:ok, post} ->
+        post = Authz.Repo.preload(post, :creator)
         notify_parent({:saved, post})
 
         {:noreply,
@@ -69,8 +70,11 @@ defmodule AuthzWeb.PostLive.FormComponent do
   end
 
   defp save_post(socket, :new, post_params) do
-    case Blog.create_post(post_params) do
+    create_params = Map.put(post_params, "creator_id", socket.assigns.current_user.id)
+
+    case Blog.create_post(create_params) do
       {:ok, post} ->
+        post = Authz.Repo.preload(post, :creator)
         notify_parent({:saved, post})
 
         {:noreply,

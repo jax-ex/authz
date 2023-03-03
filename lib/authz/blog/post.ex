@@ -5,7 +5,8 @@ defmodule Authz.Blog.Post do
   schema "posts" do
     field :body, :string
     field :title, :string
-    field :creator_id, :id
+
+    belongs_to :creator, Authz.Blog.User
 
     timestamps()
   end
@@ -13,7 +14,7 @@ defmodule Authz.Blog.Post do
   @doc false
   def changeset(post, attrs) do
     post
-    |> cast(attrs, [:title, :body])
+    |> cast(attrs, [:title, :body, :creator_id])
     |> validate_required([:title, :body])
   end
 end

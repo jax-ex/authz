@@ -144,8 +144,7 @@ defmodule Authz.BlogTest do
     test "validates maximum value for email for security", %{user: user} do
       too_long = String.duplicate("db", 100)
 
-      {:error, changeset} =
-        Blog.apply_user_email(user, valid_user_password(), %{email: too_long})
+      {:error, changeset} = Blog.apply_user_email(user, valid_user_password(), %{email: too_long})
 
       assert "should be at most 160 character(s)" in errors_on(changeset).email
     end
@@ -160,8 +159,7 @@ defmodule Authz.BlogTest do
     end
 
     test "validates current password", %{user: user} do
-      {:error, changeset} =
-        Blog.apply_user_email(user, "invalid", %{email: unique_user_email()})
+      {:error, changeset} = Blog.apply_user_email(user, "invalid", %{email: unique_user_email()})
 
       assert %{current_password: ["is not valid"]} = errors_on(changeset)
     end
@@ -514,12 +512,14 @@ defmodule Authz.BlogTest do
     @invalid_attrs %{body: nil, title: nil}
 
     test "list_posts/0 returns all posts" do
-      post = post_fixture()
+      user = user_fixture()
+      post = post_fixture(creator_id: user.id) |> Repo.preload(:creator)
       assert Blog.list_posts() == [post]
     end
 
     test "get_post!/1 returns the post with given id" do
-      post = post_fixture()
+      user = user_fixture()
+      post = post_fixture(creator_id: user.id)
       assert Blog.get_post!(post.id) == post
     end
 
