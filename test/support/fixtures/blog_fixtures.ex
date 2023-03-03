@@ -28,4 +28,19 @@ defmodule Authz.BlogFixtures do
     [_, token | _] = String.split(captured_email.text_body, "[TOKEN]")
     token
   end
+
+  @doc """
+  Generate a post.
+  """
+  def post_fixture(attrs \\ %{}) do
+    {:ok, post} =
+      attrs
+      |> Enum.into(%{
+        body: "some body",
+        title: "some title"
+      })
+      |> Authz.Blog.create_post()
+
+    post
+  end
 end
