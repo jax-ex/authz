@@ -4,9 +4,15 @@ defmodule Authz.Blog do
   """
 
   import Ecto.Query, warn: false
-  alias Authz.Repo
 
-  alias Authz.Blog.{User, UserToken, UserNotifier}
+  alias Authz.Repo
+  alias Authz.Blog.{User, UserToken, UserNotifier, Post}
+
+  import Authz.Scope
+
+  def get_post!(%User{} = user, id) do
+    user |> scope(Post) |> by_id(id) |> Repo.one!()
+  end
 
   ## Database getters
 

@@ -4,6 +4,8 @@ defmodule AuthzWeb.PostLive.Index do
   alias Authz.Blog
   alias Authz.Blog.Post
 
+  import Authz.Policy
+
   @impl true
   def mount(_params, _session, socket) do
     {:ok, stream(socket, :posts, Blog.list_posts())}
@@ -17,7 +19,7 @@ defmodule AuthzWeb.PostLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Post")
-    |> assign(:post, Blog.get_post!(id))
+    |> assign(:post, Blog.get_post!(socket.assigns.current_user, id))
   end
 
   defp apply_action(socket, :new, _params) do
