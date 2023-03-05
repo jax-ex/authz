@@ -1,18 +1,27 @@
-# Authz
+# Jax.Ex workshop 2023-03-09
 
-To start your Phoenix server:
+## Setup
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+1. Clone this repo `git clone git@github.com:jax-ex/authz.git`
+2. Run the setup `mix setup`
+3. Run the tests, watch them fail
+4. Make tests pass
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+## Requirements
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+1. Elixir
+2. Postgresql
 
-## Learn more
+## NOTE:
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+The important files that need to be modified:
+
+1. lib/authz/policy.ex
+2. lib/authz/scope.ex
+
+Important files to understand how things work:
+
+1. lib/authz_web/live/post_live/index.ex
+2. lib/authz_web/live/post_live/index.html.heex
+3. lib/authz/blog.ex
+
